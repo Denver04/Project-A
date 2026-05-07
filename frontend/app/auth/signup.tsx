@@ -1,3 +1,5 @@
+import { signupInterface } from "@/Interface/authInterface";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   View,
@@ -9,23 +11,38 @@ import {
   Platform,
 } from "react-native";
 
-interface AuthProps {
-  phoneNumer: string;
-}
-
 export default function Signup() {
-  const [phoneNo, setPhoneNo] = useState<AuthProps>({ phoneNumer: "" });
+  const [userDetails, setUserDetails] = useState<signupInterface>({
+    phoneNumer: "",
+    name: "",
+    email: "",
+  });
+  const router = useRouter();
 
   const handleSignup = () => {
-    if (!phoneNo.phoneNumer) {
-      alert("Please enter your phone number.");
-      return;
-    } else if (phoneNo.phoneNumer.length !== 10) {
-      alert("Please enter a valid phone number.");
+    if (!userDetails.name.trim()) {
+      alert("Please enter your name.");
       return;
     }
 
-    console.log("Signup pressed", { phoneNo });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!userDetails.email.trim()) {
+      alert("Please enter your email.");
+      return;
+    } else if (!emailRegex.test(userDetails.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (!userDetails.phoneNumer) {
+      alert("Please enter your phone number.");
+      return;
+    } else if (userDetails.phoneNumer.length !== 10) {
+      alert("Please enter a valid phone number.");
+      return;
+    }
+    router.navigate("/auth/otpVerification");
+    console.log("Signup pressed", { userDetails });
   };
 
   return (
@@ -36,11 +53,25 @@ export default function Signup() {
       <View style={styles.card}>
         <Text style={styles.title}>Sign Up</Text>
 
+        <Text style={styles.label}>Name</Text>
+        <TextInput
+          value={userDetails.name}
+          onChangeText={(inputName) =>
+            setUserDetails((prev) => ({ ...prev, name: inputName }))
+          }
+          keyboardType="default"
+          autoCapitalize="none"
+          autoComplete="name"
+          placeholder="Name"
+          placeholderTextColor="#808080"
+          style={styles.input}
+        />
+
         <Text style={styles.label}>Phone Number</Text>
         <TextInput
-          value={phoneNo.phoneNumer}
+          value={userDetails.phoneNumer}
           onChangeText={(inputNumber) =>
-            setPhoneNo({ phoneNumer: inputNumber })
+            setUserDetails((prev) => ({ ...prev, phoneNumer: inputNumber }))
           }
           keyboardType="phone-pad"
           autoCapitalize="none"
@@ -50,8 +81,22 @@ export default function Signup() {
           style={styles.input}
         />
 
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          value={userDetails.email}
+          onChangeText={(inputEmail) =>
+            setUserDetails((prev) => ({ ...prev, email: inputEmail }))
+          }
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+          placeholder="Email"
+          placeholderTextColor="#808080"
+          style={styles.input}
+        />
+
         <Pressable style={styles.button} onPress={handleSignup}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text style={styles.buttonText}>Continue</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>
@@ -117,4 +162,3 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 });
-

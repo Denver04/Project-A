@@ -9,10 +9,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { AuthProps } from "@/Interface/Authprops";
+import { loginInterface } from "@/Interface/authInterface";
 
 export default function Login() {
-  const [phoneNo, setPhoneNo] = useState<AuthProps>({ phoneNumer: "" });
+  const [phoneNo, setPhoneNo] = useState<loginInterface>({ phoneNumer: "" });
 
   const handleChangePhoneNumber = (enteredPhoneNo: string) => {
     setPhoneNo({ phoneNumer: enteredPhoneNo });
@@ -44,6 +44,7 @@ export default function Login() {
           keyboardType="phone-pad"
           autoCapitalize="none"
           autoComplete="tel"
+          autoFocus
           placeholder="Phone Number"
           placeholderTextColor="#808080"
           style={styles.input}
