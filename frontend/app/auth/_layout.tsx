@@ -4,9 +4,10 @@ import { StyleSheet } from "react-native";
 
 export default function AuthLayout() {
   return (
-      <Stack screenOptions={{
+    <Stack
+      screenOptions={{
         headerStyle: {
-          backgroundColor: "#1e1e1e",
+          backgroundColor: "#291d52",
         },
         headerTintColor: "#4db8ff",
         headerTitleStyle: {
@@ -17,11 +18,32 @@ export default function AuthLayout() {
         contentStyle: {
           backgroundColor: "#121212",
         },
-      }}>
-        <Stack.Screen name="login" options={{ title: "Login" }} />
-        <Stack.Screen name="signup" options={{ title: "Sign Up" }} />
-        <Stack.Screen name="otp-verification" options={{ title: "OTP Verification" }} />
-      </Stack>
+      }}
+    >
+      <Stack.Screen
+        name="login"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerBackVisible: true,
+        }}
+      />
+      <Stack.Screen
+        name="signup"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerBackVisible: true,
+        }}
+      />
+      <Stack.Screen
+        name="otpVerification"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerBackVisible: true,
+        }}
+      />
+    </Stack>
   );
 }
-
