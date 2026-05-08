@@ -1,39 +1,34 @@
-import { Link, router } from "expo-router";
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import { View, Image, StyleSheet, Pressable } from "react-native";
 import { useRouter } from "expo-router";
+import { CustomText } from "@/Components/CustomText";
 
 export default function Main() {
   const router = useRouter();
-
   return (
     <View style={styles.container}>
-      <View style={styles.background}>
-        <View style={styles.purpleCircle} />
-        <View style={styles.goldCircle} />
+      <Image
+        source={require("../images/splash_image.png")}
+        style={styles.image}
+        resizeMode="contain"
+      />
+
+      <View style={styles.textBlock}>
+        <CustomText style={styles.title}>SafeSociety</CustomText>
+        <CustomText style={styles.subtitle}>Secure Community Living</CustomText>
       </View>
-      <View style={styles.titleContainer}>
-        <Text style={[styles.titlePart, styles.rock]}>ROCK</Text>
-        <Text style={[styles.titlePart, styles.paper]}>PAPER</Text>
-        <Text style={[styles.titlePart, styles.scissors]}>SCISSORS</Text>
+
+      <View style={styles.loaderSection}>
+        <View style={styles.progressBarBackground}>
+          <View style={styles.progressBarFill} />
+        </View>
+        <CustomText style={styles.loadingText}>Loading...</CustomText>
       </View>
 
-        <Pressable onPress={() => router.navigate("/auth/login")}>
-          <Text style={styles.enterGameText}>Enter Game</Text>
-        </Pressable>
-
-
-      <View style={styles.spacer} />
-
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4db8ff" />
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
+      <Pressable
+        onPress={() => router.navigate("/auth/login")}
+      >
+        <CustomText>Go to Login</CustomText>
+      </Pressable>
     </View>
   );
 }
@@ -43,77 +38,52 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#0a0a1a",
+    backgroundColor: "#ffffff",
     padding: 24,
   },
-  titleContainer: {
+  image: {
+    width: 240,
+    height: 240,
+    marginBottom: 32,
+  },
+  textBlock: {
     alignItems: "center",
-    marginTop: 60,
+    marginBottom: 32,
   },
-  titlePart: {
-    fontSize: 48,
-    fontWeight: "800",
-    letterSpacing: 2,
-    lineHeight: 56,
-  },
-  rock: {
-    color: "#d0d0d0",
+  title: {
+    fontSize: 36,
     fontWeight: "900",
+    color: "#14142b",
+    letterSpacing: 0.2,
   },
-  paper: {
-    color: "#ffc107",
-    fontWeight: "900",
+  subtitle: {
+    marginTop: 8,
+    fontSize: 16,
+    color: "#5f5f7a",
+    fontWeight: "500",
   },
-  scissors: {
-    color: "#4db8ff",
-    fontWeight: "900",
-  },
-  spacer: {
-    flex: 1,
-  },
-  loadingContainer: {
+  loaderSection: {
+    width: "100%",
     alignItems: "center",
-    marginBottom: 40,
+    gap: 16,
   },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: "#f7c948",
-    fontWeight: "600",
-    letterSpacing: 0.5,
-  },
-  enterGameText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "800",
-    letterSpacing: 0.5,
-    backgroundColor: "rgba(124, 58, 237, 0.95)",
-    paddingHorizontal: 24,
-    paddingVertical: 14,
+  progressBarBackground: {
+    width: "100%",
+    height: 8,
+    backgroundColor: "#e9e9f0",
     borderRadius: 999,
     overflow: "hidden",
   },
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: -1,
-    backgroundColor: "#05030a",
+  progressBarFill: {
+    width: "55%",
+    height: "100%",
+    backgroundColor: "#6a5cff",
+    borderRadius: 999,
   },
-  purpleCircle: {
-    position: "absolute",
-    top: -80,
-    right: -90,
-    width: 260,
-    height: 260,
-    borderRadius: 130,
-    backgroundColor: "rgba(124, 58, 237, 0.18)",
-  },
-  goldCircle: {
-    position: "absolute",
-    bottom: -70,
-    left: -60,
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    backgroundColor: "rgba(255, 193, 7, 0.16)",
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+    color: "#5f5f7a",
+    fontWeight: "600",
   },
 });

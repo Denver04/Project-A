@@ -1,4 +1,3 @@
-import { otpVerificationInterface } from "@/Interface/authInterface";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import {
@@ -13,29 +12,22 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const OTP_LENGTH = 4;
+
 export default function OtpVerification() {
-  const [otp, setOtp] = useState<otpVerificationInterface>({ otp: "" });
+  const [otp, setOtp] = useState("");
   const router = useRouter();
 
-  const handleOtpVerification = () => {
-    if (!otp.otp) {
-      alert("Please enter the OTP");
-      return;
-    }
-    if (otp.otp.length !== 6) {
-      alert("Please enter a valid 6-digit OTP");
+  const handleVerify = () => {
+    if (otp.length !== OTP_LENGTH) {
+      alert("Please enter the 4-digit OTP");
       return;
     }
     router.navigate("/home");
-    console.log("OTP Verification pressed", { otp });
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.background}>
-        <View style={styles.purpleCircle} />
-        <View style={styles.goldCircle} />
-      </View>
       <KeyboardAvoidingView
         style={styles.safeArea}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -46,33 +38,26 @@ export default function OtpVerification() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.card}>
-            <Text style={styles.header}>OTP Verification</Text>
-            <Text style={styles.subtitle}>
-              Enter the 6-digit code sent to your phone.
-            </Text>
+          <View style={styles.content}>
+            <Text style={styles.header}>Enter OTP</Text>
+            <Text style={styles.subtitle}>We have sent a 4 digit code to</Text>
+            <Text style={styles.phoneNumber}>{"+91 98765 43210"}</Text>
 
             <TextInput
-              value={otp.otp}
-              onChangeText={(text) => setOtp({ otp: text })}
-              style={styles.input}
+              value={otp}
+              onChangeText={(text) => setOtp(text.replace(/[^0-9]/g, ""))}
               keyboardType="number-pad"
+              maxLength={OTP_LENGTH}
               placeholder="Enter OTP"
-              autoFocus
-              maxLength={6}
-              placeholderTextColor="#808080"
+              placeholderTextColor="#9ca3af"
+              style={styles.input}
             />
 
-            <Pressable style={styles.button} onPress={handleOtpVerification}>
+            <Pressable style={styles.button} onPress={handleVerify}>
               <Text style={styles.buttonText}>Verify OTP</Text>
             </Pressable>
 
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>Didn't receive a code?</Text>
-              <Pressable>
-                <Text style={styles.resendText}> Resend</Text>
-              </Pressable>
-            </View>
+            <Text style={styles.resendText}>Resend OTP in 00:30</Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -83,107 +68,73 @@ export default function OtpVerification() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#0f0f1e",
+    backgroundColor: "#f6f7fb",
   },
   scrollView: {
     flex: 1,
   },
-  container: {
-    flex: 1,
-    backgroundColor: "#05030a",
-  },
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: -1,
-    backgroundColor: "#05030a",
-  },
-  purpleCircle: {
-    position: "absolute",
-    top: -90,
-    right: -80,
-    width: 260,
-    height: 260,
-    borderRadius: 130,
-    backgroundColor: "rgba(124, 58, 237, 0.18)",
-  },
-  goldCircle: {
-    position: "absolute",
-    bottom: -80,
-    left: -50,
-    width: 170,
-    height: 170,
-    borderRadius: 85,
-    backgroundColor: "rgba(255, 193, 7, 0.16)",
-  },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center",
-    padding: 20,
-    paddingBottom: 40,
+    justifyContent: "flex-start",
+    paddingHorizontal: 24,
+    paddingTop: 32,
+    paddingBottom: 24,
   },
-  card: {
+  content: {
     width: "100%",
-    maxWidth: 520,
-    alignSelf: "center",
-    backgroundColor: "rgba(24, 16, 52, 0.96)",
-    borderRadius: 16,
-    padding: 28,
-    borderWidth: 1,
-    borderColor: "#7c3aed",
   },
   header: {
-    fontSize: 24,
-    fontWeight: "800",
-    color: "#ffffff",
+    fontSize: 28,
+    fontWeight: "900",
+    color: "#111827",
+    textAlign: "center",
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 14,
-    fontWeight: "500",
-    color: "#a0a0b0",
+    color: "#6b7280",
+    textAlign: "center",
+    marginBottom: 6,
+    fontWeight: "900",
+  },
+  phoneNumber: {
+    fontSize: 16,
+    color: "#111827",
+    fontWeight: "700",
+    textAlign: "center",
     marginBottom: 24,
   },
   input: {
     width: "100%",
-    height: 56,
-    borderColor: "#333344",
+    maxHeight: 56,
     borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 18,
-    backgroundColor: "#252540",
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "600",
-    letterSpacing: 2,
+    borderColor: "#d1d5db",
+    borderRadius: 16,
+    backgroundColor: "#ffffff",
+    color: "#111827",
+    fontSize: 20,
+    fontWeight: "700",
+    letterSpacing: 4,
     textAlign: "center",
+    justifyContent: "center",
     marginBottom: 24,
   },
   button: {
     height: 52,
-    borderRadius: 12,
-    backgroundColor: "#7c3aed",
+    borderRadius: 16,
+    backgroundColor: "#4d3df9",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   buttonText: {
     color: "#ffffff",
     fontSize: 16,
-    fontWeight: "800",
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 8,
-  },
-  footerText: {
-    color: "#a0a0b0",
-    fontSize: 13,
+    fontWeight: "700",
   },
   resendText: {
-    color: "#b084cc",
     fontSize: 13,
-    fontWeight: "700",
+    color: "#6b7280",
+    textAlign: "center",
   },
 });
