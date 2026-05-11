@@ -1,4 +1,4 @@
-import { CustomText } from "@/Components/CustomText";
+import { CustomText } from "@/components/CustomText";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

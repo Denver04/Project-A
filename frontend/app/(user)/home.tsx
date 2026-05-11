@@ -1,7 +1,6 @@
-﻿import { CustomText } from "@/Components/CustomText";
+﻿import { CustomText } from "@/components/CustomText";
 import { View, Pressable, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function Home() {
   return (
@@ -78,25 +77,6 @@ export default function Home() {
             </View>
           </View>
         </View>
-
-        {/* <View style={styles.bottomNav}>
-          <View style={styles.navItemActive}>
-            <CustomText style={styles.navIcon}>🏠</CustomText>
-            <CustomText style={styles.navLabelActive}>Home</CustomText>
-          </View>
-          <View style={styles.navItem}>
-            <CustomText style={styles.navIcon}>👥</CustomText>
-            <CustomText style={styles.navLabel}>Visitors</CustomText>
-          </View>
-          <View style={styles.navItem}>
-            <CustomText style={styles.navIcon}>🔔</CustomText>
-            <CustomText style={styles.navLabel}>Notifications</CustomText>
-          </View>
-          <View style={styles.navItem}>
-            <CustomText style={styles.navIcon}>👤</CustomText>
-            <CustomText style={styles.navLabel}>Profile</CustomText>
-          </View>
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

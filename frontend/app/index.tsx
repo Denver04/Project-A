@@ -1,6 +1,6 @@
 import { View, Image, StyleSheet, Pressable } from "react-native";
 import { useRouter } from "expo-router";
-import { CustomText } from "@/Components/CustomText";
+import { CustomText } from "@/components/CustomText";
 
 export default function Main() {
   const router = useRouter();

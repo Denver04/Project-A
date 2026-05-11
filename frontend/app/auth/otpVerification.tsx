@@ -23,7 +23,7 @@ export default function OtpVerification() {
       alert("Please enter the 4-digit OTP");
       return;
     }
-    router.navigate("/home");
+    router.navigate("/(user)/home");
   };
 
   return (
