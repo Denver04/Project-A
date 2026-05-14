@@ -24,9 +24,7 @@ export default function Main() {
         <CustomText style={styles.loadingText}>Loading...</CustomText>
       </View>
 
-      <Pressable
-        onPress={() => router.navigate("/auth/login")}
-      >
+      <Pressable onPress={() => router.navigate("/auth/login")}>
         <CustomText>Go to Login</CustomText>
       </Pressable>
     </View>
