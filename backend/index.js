@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const prisma = require('./config/prisma');
 
 dotenv.config();
 const app = express();
