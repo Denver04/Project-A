@@ -2,56 +2,37 @@ const USER_CONSTANTS = require("./user.constant");
 const userService = require("./user.service");
 
 exports.signUpUser = async (req, res, next) => {
-    try {
-        const payload = req.body;
-        const result = await userService.signUp(payload);
+  try {
+    const payload = req.body;
+    const result = await userService.signUp(payload);
 
-        return res.status(201).json({
-            success: true,
-            message: USER_CONSTANTS.LOGIN_MESSAGES.REGISTRATION_SUCCESS,
-            data: result
-        });
-    } catch (err) {
-        return res.status(400).json({
-            success: false,
-            message: USER_CONSTANTS.LOGIN_MESSAGES.REGISTRATION_FAILURE
-        })
-    }
+    return res.status(201).json({
+      success: true,
+      message: USER_CONSTANTS.LOGIN_MESSAGES.REGISTRATION_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: USER_CONSTANTS.LOGIN_MESSAGES.REGISTRATION_FAILURE,
+    });
+  }
 };
 
 exports.loginUser = async (req, res, next) => {
-    try {
-        const payload = req.body;
-        const result = await userService.login(payload);
-
-        return res.status(200).json({
-            success: true,
-            message: USER_CONSTANTS.LOGIN_MESSAGES.LOGIN_SUCCESS,
-            data: result
-        });
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: USER_CONSTANTS.LOGIN_MESSAGES.LOGIN_FAILURE
-        });
-    }
-};
-
-exports.otpVerification = async (req, res, next) => {
-    // Implement OTP verification logic here
+  try {
     const payload = req.body;
-
-    const isValidOTP = await userService.verifyOTP(payload);
-
-    if (!isValidOTP) {
-        return res.status(400).json({
-            success: false,
-            message: USER_CONSTANTS.OTP_MESSAGES.OTP_VERIFICATION_FAILURE,
-        });
-    }
+    const result = await userService.login(payload);
 
     return res.status(200).json({
-        success: true,
-        message: USER_CONSTANTS.OTP_MESSAGES.OTP_VERIFICATION_SUCCESS,
+      success: true,
+      message: USER_CONSTANTS.LOGIN_MESSAGES.LOGIN_SUCCESS,
+      data: result,
     });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: USER_CONSTANTS.LOGIN_MESSAGES.LOGIN_FAILURE,
+    });
+  }
 };

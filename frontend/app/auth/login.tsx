@@ -19,7 +19,7 @@ export default function Login() {
     phoneNumer: "",
   });
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!credentials.phoneNumer) {
       alert("Please enter your phone number");
       return;
@@ -28,15 +28,20 @@ export default function Login() {
       return;
     }
 
-    api.post("/user/login", credentials)
-      .then((res) => {
-        console.log("Login successful:", res.data);
-        router.navigate("/auth/otpVerification");
-      })
-      .catch((err) => {
-        console.error("Login failed:", err);
-        alert("Login failed. Please check your phone number and try again.");
-      });
+    try {
+      const loginResponse = await api.post("/user/login", credentials);
+      console.log("Login successful:", loginResponse.data);
+
+      // const otpResponse = await api.post("/user/send-otp", {
+      //   phoneNumer: credentials.phoneNumer,
+      // });
+      // console.log("OTP sent successfully:", otpResponse.data);
+
+      // router.navigate("/auth/otpVerification");
+    } catch (error) {
+      console.error("Error during login or OTP sending:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (

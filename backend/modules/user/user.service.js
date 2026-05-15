@@ -57,11 +57,3 @@ exports.login = async (payload) => {
     message: USER_CONSTANTS.LOGIN_MESSAGES.LOGIN_SUCCESS,
   };
 };
-
-exports.verifyOTP = async (payload) => {
-  // Implement OTP verification logic here
-  // This is a placeholder implementation, replace with actual OTP verification
-    const { phoneNumber, otp } = payload;
-
-    return true;
-};
