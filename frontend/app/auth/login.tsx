@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { loginInterface } from "@/Interface/authInterface";
+import api from "@/services/api";
 
 export default function Login() {
   const [credentials, setCredentials] = useState<loginInterface>({
@@ -19,15 +20,23 @@ export default function Login() {
   });
 
   const handleLogin = () => {
-    // if (!credentials.phoneNumer) {
-    //   alert("Please enter your phone number");
-    //   return;
-    // } else if (credentials.phoneNumer.length < 10) {
-    //   alert("Please enter a valid phone number");
-    //   return;
-    // }
-    // Here you would typically make an API call to send the OTP to the user's phone number.
-    router.navigate("/auth/otpVerification");
+    if (!credentials.phoneNumer) {
+      alert("Please enter your phone number");
+      return;
+    } else if (credentials.phoneNumer.length < 10) {
+      alert("Please enter a valid phone number");
+      return;
+    }
+
+    api.post("/user/login", credentials)
+      .then((res) => {
+        console.log("Login successful:", res.data);
+        router.navigate("/auth/otpVerification");
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
+        alert("Login failed. Please check your phone number and try again.");
+      });
   };
 
   return (
